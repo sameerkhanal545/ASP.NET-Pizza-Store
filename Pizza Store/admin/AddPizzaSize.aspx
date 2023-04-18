@@ -30,6 +30,6 @@
             <asp:RequiredFieldValidator ID="priceValidator" runat="server" CssClass="text-danger" ControlToValidate="priceTextbox" ErrorMessage="Please enter valid Price" Display="Dynamic"></asp:RequiredFieldValidator>
             <asp:RegularExpressionValidator ID="RegularExpressionValidator1" CssClass="text-danger" runat="server" ControlToValidate="priceTextbox" ErrorMessage="Please enter valid Price" Display="Dynamic" ValidationExpression="^-?\d+(\.\d+)?$"></asp:RegularExpressionValidator>
         </div>
-        <asp:Button ID="submitButton" runat="server" Text="Add" CssClass="btn btn-primary" OnClick="addPizzaButton_Click" />
+        <asp:Button ID="submitButton" runat="server" Text="Add" CssClass="btn btn-primary mt-3" OnClick="addPizzaButton_Click" />
     </div>
 </asp:Content>

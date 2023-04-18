@@ -50,14 +50,20 @@
                         <li class="nav-item active"><a class="nav-link" runat="server" href="~/">Home</a></li>
                         <%--    <li class="nav-item"><a class="nav-link" runat="server" href="~/About">About</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contact</a></li>--%>
+
+                        <% if (Context.User.Identity.GetUserName() != "" && Context.User.IsInRole("Admin"))
+                            {  %>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/admin/AddProducts">Add Pizza</a></li>
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/admin/ListProducts">List Pizza</a></li>
+
+                        <li class="nav-item"><a class="nav-link" runat="server" href="~/admin/AddPizzaSize.aspx">Add Size</a></li>
+
+                        <% }
+                        else  %>
                         <% if (Context.User.Identity.GetUserName() != "")
                             {  %>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Cart">Cart</a></li>
                         <li class="nav-item"><a class="nav-link" runat="server" href="~/Orders">Order</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/admin/AddProducts">Add</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/admin/AddPizzaSize.aspx">Add Size</a></li>
-
-
                         <% }  %>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
@@ -68,7 +74,10 @@
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
+
                             <ul class="nav navbar-nav navbar-right">
+                                <% if (Context.User.Identity.GetUserName() != "" && !Context.User.IsInRole("Admin"))
+                                    {  %>
                                 <a class="nav-link" href="<%= ResolveUrl("~/Cart.aspx") %>">
                                     <?xml version="1.0" ?>
                                     <svg class="feather feather-shopping-cart" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +87,7 @@
                                     </svg>
                                     <span class="badge badge-warning rounded-circle" style="padding: 4px;"><sup><%= GetCartItemCount() %></sup></span>
                                 </a>
-
+                                <% }  %>
                                 <li>
 
                                     <a runat="server" href="~/Account/Manage" title="Manage your account">Account | </a></li>

@@ -13,18 +13,18 @@
         </div>
         <div class="form-group">
             <label for="txtDescription">Description:</label>
-            <asp:TextBox ID="txtDescription" runat="server" CssClass="form-control" Text='<%# Bind("Description") %>'></asp:TextBox>
+            <asp:TextBox ID="txtDescription" TextMode="MultiLine" runat="server" CssClass="form-control" Text='<%# Bind("Description") %>'></asp:TextBox>
             <asp:RequiredFieldValidator ID="rfvDescription" runat="server" ControlToValidate="txtDescription" ErrorMessage="Description is required" CssClass="text-danger"></asp:RequiredFieldValidator>
         </div>
         <div class="form-group">
             <label for="txtShortDescription">Short Description:</label>
-            <asp:TextBox ID="txtShortDescription" runat="server" CssClass="form-control" Text='<%# Bind("ShortDescription") %>'></asp:TextBox>
+            <asp:TextBox ID="txtShortDescription" TextMode="MultiLine" runat="server" CssClass="form-control" Text='<%# Bind("ShortDescription") %>'></asp:TextBox>
             <asp:RequiredFieldValidator ID="rfvShortDescription" runat="server" ControlToValidate="txtShortDescription" ErrorMessage="Short Description is required" CssClass="text-danger"></asp:RequiredFieldValidator>
 
         </div>
         <div class="form-group">
             <label for="txtImagePath">Image Path:</label>
-            <asp:FileUpload ssClass="form-control" ID="ImageUpload" runat="server" />
+            <asp:FileUpload CssClass="form-control" ID="ImageUpload" runat="server" />
         </div>
         <%--  <div class="form-group">
             <label for="txtPrice">Price:</label>
@@ -32,7 +32,7 @@
             <asp:RegularExpressionValidator ID="revPrice" runat="server" ControlToValidate="txtPrice" ErrorMessage="Price must be a number" ValidationExpression="^\d+(\.\d{1,2})?$" CssClass="text-danger"></asp:RegularExpressionValidator>
             <asp:RequiredFieldValidator ID="rfvPrice" runat="server" ControlToValidate="txtPrice" ErrorMessage="Price is required" CssClass="text-danger"></asp:RequiredFieldValidator>
         </div>--%>
-        <asp:Button ID="btnAddPizza" runat="server" Text="Add Pizza" CssClass="btn btn-primary" OnClick="btnAddPizza_Click" />
+        <asp:Button ID="btnAddPizza" runat="server" Text="Add Pizza" CssClass="btn btn-primary mt-3" OnClick="btnAddPizza_Click" />
 
 
     </div>

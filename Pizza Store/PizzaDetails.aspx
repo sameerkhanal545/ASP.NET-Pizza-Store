@@ -25,9 +25,9 @@
                             <asp:RangeValidator ID="RangeValidator1" runat="server" ErrorMessage="Invalid Quantity" Type="Integer" Display="Dynamic" MinimumValue="1" ControlToValidate="cart_quantity" ForeColor="#990000" MaximumValue="10"></asp:RangeValidator>
                             <asp:DropDownList ID="SizeDropDown" AutoPostBack="True" runat="server" OnSelectedIndexChanged="SizeDropDown_SelectedIndexChanged"></asp:DropDownList>
                         </div>
-
+                        <% if(!Context.User.IsInRole("Admin")){  %>
                         <asp:Button ID="btnAddToCart" runat="server" Text="Add To Cart" CssClass="btn btn-primary btn-lg" CommandArgument='<%# Eval("Pizza.ProductID") %>' OnClick="btnAddToCart_Click" />
-
+                        <%}  %>
                         <div style="clear: both"></div>
 
                         <hr>

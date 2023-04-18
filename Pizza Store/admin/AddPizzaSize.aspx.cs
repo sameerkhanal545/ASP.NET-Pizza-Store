@@ -17,10 +17,19 @@ namespace Pizza_Store.admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+
+                if (Request.QueryString["PizzaID"] != null)
+                {
+                    pizzaDropdown.SelectedValue = Request.QueryString["PizzaID"];
+                    pizzaDropdown.Enabled = false;
+
+                }
 
 
+            }
         }
-
         protected void addPizzaButton_Click(object sender, EventArgs e)
         {
             if (Page.IsValid) // check if the page is valid based on the validation controls

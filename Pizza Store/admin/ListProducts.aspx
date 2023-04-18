@@ -1,9 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListProducts.aspx.cs" Inherits="Pizza_Store.AddProducts" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:GridView ID="GridView1" CssClass="mt-4" runat="server" AutoGenerateColumns="False" DataKeyNames="PizzaID" DataSourceID="SqlDataSource1" AllowPaging="True" AllowSorting="True" CellPadding="4" ForeColor="#333333" GridLines="None">
+    <asp:GridView ID="GridView1" CssClass="mt-4" runat="server" AutoGenerateColumns="False" DataKeyNames="PizzaID" DataSourceID="SqlDataSource1" AllowPaging="True" AllowSorting="True" CellPadding="4" ForeColor="#333333" GridLines="None" OnRowCommand="GridView1_RowCommand">
         <AlternatingRowStyle BackColor="White" />
         <Columns>
-            <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" />
             <asp:BoundField DataField="PizzaID" HeaderText="PizzaID" ReadOnly="True" InsertVisible="False" SortExpression="PizzaID"></asp:BoundField>
             <asp:TemplateField HeaderText="Name" SortExpression="Name">
                 <EditItemTemplate>
@@ -35,6 +35,17 @@
                 </EditItemTemplate>
                 <ItemTemplate>
                     <asp:Label runat="server" Text='<%# Bind("ShortDescription") %>' ID="Label4"></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Pricing">
+                <ItemTemplate>
+                    <asp:Button ID="btnAddPrice" runat="server" Text="Add Price" CssClass="btn btn-info" CommandName="AddPrice" CommandArgument='<%# Eval("PizzaID") %>' />
+                </ItemTemplate>
+
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Actions">
+                <ItemTemplate>
+                    <asp:Button ID="btnEdit" runat="server" Text="Edit" CssClass="btn btn-warning" CommandName="Edit" CommandArgument='<%# Eval("PizzaID") %>' />
                 </ItemTemplate>
             </asp:TemplateField>
 

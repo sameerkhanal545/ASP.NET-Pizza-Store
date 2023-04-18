@@ -9,8 +9,24 @@ namespace Pizza_Store
 {
     public partial class AddProducts : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandName == "AddPrice")
+            {
+                // Get the ProductID from the CommandArgument
+                int productID = Convert.ToInt32(e.CommandArgument);
+
+                // Redirect to the product details page
+                Response.Redirect("AddPizzaSize.aspx?PizzaID=" + productID);
+            }
+            else if (e.CommandName == "Edit")
+            {
+                // Get the ProductID from the CommandArgument
+                int productID = Convert.ToInt32(e.CommandArgument);
+
+                // Redirect to the product details page
+                Response.Redirect("EditProduct.aspx?PizzaID=" + productID);
+            }
 
         }
     }
