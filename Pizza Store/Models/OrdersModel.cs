@@ -13,5 +13,6 @@ namespace Pizza_Store.Models
         public decimal TotalAmount { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
+        public OrderItems OrderItems { get; set; }
     }
 }

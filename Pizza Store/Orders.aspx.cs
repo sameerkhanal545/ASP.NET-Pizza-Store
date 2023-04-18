@@ -55,5 +55,14 @@ namespace Pizza_Store
 
             }
         }
+
+        protected void btnOrderDetail_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            int OrderID = int.Parse(button.CommandArgument);
+            Response.Redirect("OrderDetails?OrderID=" + OrderID);
+
+        }
+
     }
 }

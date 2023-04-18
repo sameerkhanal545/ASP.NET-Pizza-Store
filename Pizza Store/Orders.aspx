@@ -18,7 +18,7 @@
                         <td class="col-sm-3 col-md-3"><%# Eval("CustomerAddress") %></td>
                         <td class="col-sm-1 col-md-1 text-center"><strong><%# Eval("TotalAmount", "{0:c}") %></strong></td>
                         <td class="col-sm-1 col-md-1 text-center">
-                            <asp:Button ID="btnViewOrder" runat="server" Text="Details" CssClass="btn btn-danger" CommandArgument='<%# Eval("OrderID") %>' />
+                            <asp:Button ID="btnViewOrder" runat="server" Text="Details" CssClass="btn btn-danger"  CommandArgument='<%# Eval("OrderID") %>' OnClick="btnOrderDetail_Click"/>
                         </td>
                     </tr>
                 </ItemTemplate>

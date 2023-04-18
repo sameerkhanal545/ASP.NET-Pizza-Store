@@ -38,7 +38,15 @@ namespace Pizza_Store.Account
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                        string returnUrlFromSession = (string)Session["ReturnUrl"];
+                        if (!string.IsNullOrEmpty(returnUrlFromSession))
+                        {
+                            Response.Redirect(returnUrlFromSession);
+                        }
+                        else
+                        {
+                            Response.Redirect("~/");
+                        }
                         break;
                     case SignInStatus.LockedOut:
                         Response.Redirect("/Account/Lockout");

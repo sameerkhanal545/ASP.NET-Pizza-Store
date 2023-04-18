@@ -186,3 +186,15 @@ input[type="select"] {
     float: right;
     margin:5px;
 }
+.md-icon.md-cart {
+    font-size: 32px;
+    color: #000000;
+    cursor: pointer;
+    margin-right: 16px;
+}
+sub, sup {
+    position: relative;
+    font-size: 1.25em;
+    line-height: 0;
+    vertical-align: baseline;
+}

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
@@ -70,6 +72,25 @@ namespace Pizza_Store
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
+        }
+
+        public int GetCartItemCount()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            int count = 0;
+            string userId = Context.User.Identity.GetUserId();
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM CartItem WHERE CartID in (Select CartID FROM Cart WHERE  CustomerID = @CustomerID)", con))
+                {
+                    cmd.Parameters.AddWithValue("@CustomerID", userId);
+                    con.Open();
+                    count = (int)cmd.ExecuteScalar();
+                }
+            }
+            return count;
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)

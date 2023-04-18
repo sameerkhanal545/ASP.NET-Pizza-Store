@@ -87,47 +87,56 @@ namespace Pizza_Store
 
         protected void btnAddToCart_Click(object sender, EventArgs e)
         {
-            PizzaModel pizza = (PizzaModel)Session["Pizza"];
-
-            PizzaDetails page = (PizzaDetails)this.Page;
-            page.Pizza = pizza;
-
-            string userId = ((ClaimsIdentity)Context.User.Identity).GetUserId();
-            int cartId;
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            if (User.Identity.IsAuthenticated)
             {
-                SqlCommand cmd = new SqlCommand("Select * from Cart where CustomerID = @CustomerID", connection);
-                cmd.Parameters.AddWithValue("@CustomerID", userId);
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.HasRows)
+
+                PizzaModel pizza = (PizzaModel)Session["Pizza"];
+
+                PizzaDetails page = (PizzaDetails)this.Page;
+                page.Pizza = pizza;
+
+                string userId = ((ClaimsIdentity)Context.User.Identity).GetUserId();
+                int cartId;
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    reader.Read();
-                    cartId = Int32.Parse(reader["CartID"].ToString());
+                    SqlCommand cmd = new SqlCommand("Select * from Cart where CustomerID = @CustomerID", connection);
+                    cmd.Parameters.AddWithValue("@CustomerID", userId);
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        cartId = Int32.Parse(reader["CartID"].ToString());
+
+                    }
+                    else
+                    {
+                        reader.Close();
+                        SqlCommand cmdInsert = new SqlCommand("INSERT INTO Cart (CustomerID) VALUES (@CustomerID); SELECT SCOPE_IDENTITY();", connection);
+                        cmdInsert.Parameters.AddWithValue("@CustomerID", userId);
+                        cartId = Convert.ToInt32(cmdInsert.ExecuteScalar());
+
+                    }
+                    if (!reader.IsClosed)
+                    {
+                        reader.Close();
+                    }
+                    SqlCommand cartItemInsert = new SqlCommand("INSERT INTO CartItem (CartID,PizzaID,Quantity,Price) VALUES (@CartID,@PizzaID,@Quantity,@Price)", connection);
+                    cartItemInsert.Parameters.AddWithValue("@CartID", cartId);
+                    cartItemInsert.Parameters.AddWithValue("@PizzaID", pizza.PizzaID);
+                    cartItemInsert.Parameters.AddWithValue("@Quantity", Int32.Parse(cart_quantity.Text));
+                    cartItemInsert.Parameters.AddWithValue("@Price", pizza.Price);
+                    cartItemInsert.ExecuteNonQuery();
+                    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "success-alert", "$('#success-alert').show();", true);
 
                 }
-                else
-                {
-                    reader.Close();
-                    SqlCommand cmdInsert = new SqlCommand("INSERT INTO Cart (CustomerID) VALUES (@CustomerID); SELECT SCOPE_IDENTITY();", connection);
-                    cmdInsert.Parameters.AddWithValue("@CustomerID", userId);
-                    cartId = Convert.ToInt32(cmdInsert.ExecuteScalar());
-
-                }
-                if (!reader.IsClosed)
-                {
-                    reader.Close();
-                }
-                SqlCommand cartItemInsert = new SqlCommand("INSERT INTO CartItem (CartID,PizzaID,Quantity,Price) VALUES (@CartID,@PizzaID,@Quantity,@Price)", connection);
-                cartItemInsert.Parameters.AddWithValue("@CartID", cartId);
-                cartItemInsert.Parameters.AddWithValue("@PizzaID", pizza.PizzaID);
-                cartItemInsert.Parameters.AddWithValue("@Quantity", Int32.Parse(cart_quantity.Text));
-                cartItemInsert.Parameters.AddWithValue("@Price", pizza.Price);
-                cartItemInsert.ExecuteNonQuery();
-                ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "success-alert", "$('#success-alert').show();", true);
-
+            }
+            else
+            {
+                Session["ReturnUrl"] = Request.Url.AbsoluteUri;
+                Response.Redirect("/Account/Login");
             }
         }
-    
+
     }
 }
